@@ -1,7 +1,10 @@
 import spock.lang.Shared
 import spock.lang.Specification
+import spock.lang.Unroll
 
 class MyUtilityTest extends Specification {
+
+    MyUtility myUtility = new MyUtility()
 
     @Shared
     def json = """{
@@ -59,13 +62,11 @@ class MyUtilityTest extends Specification {
       }
     }"""
 
-    def "utility"(def jsonString, def key, def out) {
+    @Unroll
+    "utility"() {
 
         expect:
-        MyUtility myUtility = new MyUtility()
-
         myUtility.utility(jsonString, key) == out
-
 
         where:
         jsonString  |  key          | out
