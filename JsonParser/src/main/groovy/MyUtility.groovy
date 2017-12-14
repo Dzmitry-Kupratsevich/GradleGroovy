@@ -2,12 +2,12 @@ import com.google.gson.Gson
 
 class MyUtility
 {
-    def util (m, def key) {
+    def parser (m, def key) {
         m.with{
             if (it instanceof Map) {
-                [it.get(key)] + it.values().collect {util(it, key)}
+                [it.get(key)] + it.values().collect {parser(it, key)}
             } else if (it instanceof ArrayList) {
-                it.each {util(it, key)}.collect {util(it, key)}
+                it.each {parser(it, key)}.collect {parser(it, key)}
             } else {
                 []
             }
@@ -17,7 +17,7 @@ class MyUtility
     def utility(String json,String key) {
         def gsonFrom = new Gson()
         def mapFromJson = gsonFrom.fromJson(json, Map.class)
-        util(mapFromJson, key).findAll {it != null}
+        parser(mapFromJson, key).findAll {it != null}
     }
 
 }
